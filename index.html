@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.29.3/full/pyodide.js"></script>
+    <script type="text/javascript">
+      async function main() {
+        let pyodide = await loadPyodide();
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install("https://github.com/dirkarnez/lightfm-pyodide/releases/download/v1.17/lightfm-1.17-cp311-cp311-emscripten_3_1_46_wasm32.whl");
+        await pyodide.runPython(`
+        import lightfm
+      `);
+      }
+      main();
+    </script>
+  </body>
+</html>

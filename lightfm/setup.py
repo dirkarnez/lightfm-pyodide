@@ -13,10 +13,10 @@ def define_extensions(use_openmp):
     if not os.environ.get("LIGHTFM_NO_CFLAGS"):
         compile_args += ["-ffast-math"]
 
-        if sys.platform.startswith("darwin"):
-            compile_args += []
-        else:
-            compile_args += ["-march=native"]
+        # if sys.platform.startswith("darwin"):
+        #     compile_args += []
+        # else:
+        #     compile_args += ["-march=native"]
 
     if not use_openmp:
         print("Compiling without OpenMP support.")
@@ -159,9 +159,10 @@ def read_version():
     return mod["__version__"]
 
 
-use_openmp = not sys.platform.startswith("darwin") and not sys.platform.startswith(
-    "win"
-)
+# use_openmp = not sys.platform.startswith("darwin") and not sys.platform.startswith(
+#     "win"
+# )
+use_openmp = False
 
 long_description = pathlib.Path(__file__).parent.joinpath("README.md").read_text()
 

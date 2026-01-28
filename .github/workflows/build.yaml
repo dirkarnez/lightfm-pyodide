@@ -1,0 +1,52 @@
+name: LightFM build
+
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+  
+defaults:
+  run:
+    shell: bash
+    
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [ "3.11" ]
+    steps:
+      - uses: actions/checkout@v6
+      
+      - uses: actions/checkout@v6
+        with:
+          # Repository name with owner. For example, actions/checkout
+          # Default: ${{ github.repository }}
+          repository: 'lyst/lightfm'
+          ref: '1.17'
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - run: |
+          sudo apt-get update && \
+          sudo apt-get install -y libxml2 libxslt-dev wget bzip2 gcc
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyodide-build
+          pyodide venv .venv-pyodide
+
+      - uses: fastai/workflows/ssh@master
+        with:
+          ssh_key: ${{ secrets.SSH_KEY }}
+          key_file: id_ecdsa
+  #     - uses: actions/checkout@v2
+  #     - run: source script-linux.sh
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@master

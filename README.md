@@ -1,5 +1,5 @@
-lightfm-pyodide
-===============
+[lightfm-pyodide](https://dirkarnez.github.io/lightfm-pyodide/)
+===============================================================
 Build [lyst/lightfm](https://github.com/lyst/lightfm) targetting Pyodide
 
 ### Tutorials

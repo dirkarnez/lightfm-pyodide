@@ -1,10 +1,17 @@
 name: LightFM build
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  workflow_dispatch:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+    contents: write
   
 defaults:
   run:
@@ -50,13 +57,29 @@ jobs:
       - working-directory: 'lightfm'
         run: |
           pyodide build && \
-          ls
+          ls -R
 
-      - uses: fastai/workflows/ssh@master
+  # /home/runner/work/lightfm-pyodide/lightfm-pyodide/lightfm/dist/lightfm-1.17-cp311-cp311-emscripten_3_1_46_wasm32.whl
+
+      # - name: Archive Release
+      #   uses: thedoctor0/zip-release@master
+      #   with:
+      #     type: 'zip'
+      #     path: ${{ github.event.repository.name }}*
+      #     filename: "${{ github.event.repository.name }}-${{ github.ref_name }}-${{ matrix.os }}.zip"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
         with:
-          ssh_key: ${{ secrets.SSH_KEY }}
-          key_file: id_ecdsa
-  #     - uses: actions/checkout@v2
-  #     - run: source script-linux.sh
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@master
+          artifacts: "lightfm/dist/*.whl"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - uses: fastai/workflows/ssh@master
+  #       with:
+  #         ssh_key: ${{ secrets.SSH_KEY }}
+  #         key_file: id_ecdsa
+  # #     - uses: actions/checkout@v2
+  # #     - run: source script-linux.sh
+  #     - name: Setup tmate session
+  #       uses: mxschmitt/action-tmate@master

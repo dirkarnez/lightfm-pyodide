@@ -32,6 +32,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 3.1.46
+          
       - run: |
           sudo apt-get update && \
           sudo apt-get install -y libxml2 libxslt-dev wget bzip2 gcc
@@ -42,6 +46,7 @@ jobs:
           python -m pip install wheel==0.45.1 setuptools --upgrade
           pip install pyodide-build
           pyodide venv .venv-pyodide
+          pyodide build
 
       - uses: fastai/workflows/ssh@master
         with:

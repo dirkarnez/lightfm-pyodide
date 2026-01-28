@@ -20,12 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       
-      - uses: actions/checkout@v6
-        with:
-          # Repository name with owner. For example, actions/checkout
-          # Default: ${{ github.repository }}
-          repository: 'lyst/lightfm'
-          ref: '1.17'
+      # - uses: actions/checkout@v6
+      #   with:
+      #     # Repository name with owner. For example, actions/checkout
+      #     # Default: ${{ github.repository }}
+      #     repository: 'lyst/lightfm'
+      #     ref: '1.17'
       
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -46,6 +46,9 @@ jobs:
           python -m pip install wheel==0.45.1 setuptools --upgrade
           pip install pyodide-build
           pyodide venv .venv-pyodide
+
+      - working-directory: 'lightfm'
+        run: |
           pyodide build
 
       - uses: fastai/workflows/ssh@master

@@ -41,7 +41,7 @@ jobs:
 
       - uses: mymindstorm/setup-emsdk@v14
         with:
-          version: 4.0.9 # 3.1.46
+          version: 3.1.58 # 4.0.9 # 3.1.46
           
       - run: |
           sudo apt-get update && \
@@ -52,6 +52,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install wheel==0.45.1 setuptools --upgrade
           python -m pip install pyodide-build==0.32.0 pyodide-cli==0.5.0
+          pyodide config get emscripten_version
+          pyodide xbuildenv search -a
           pyodide venv .venv-pyodide
 
       - working-directory: 'lightfm'

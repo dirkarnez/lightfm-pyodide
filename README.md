@@ -4,6 +4,7 @@ Build [lyst/lightfm](https://github.com/lyst/lightfm) targetting Pyodide. Workin
 
 ### Notes
 - `pyodide` cli does not support Windows yet
+- need to match Python, `pyodide`, wheel, emscripten... versions
 
 ### Tutorials
 - [Building Python Packages from Source — Version 0.30.0.dev0](https://pyodide.org/en/latest/development/building-packages-from-source.html)

@@ -13,7 +13,9 @@
         let pyodide = await loadPyodide();
         await pyodide.loadPackage("micropip");
         const micropip = pyodide.pyimport("micropip");
-        await micropip.install("https://github.com/dirkarnez/lightfm-pyodide/releases/download/v1.17/lightfm-1.17-cp312-cp312-pyodide_2024_0_wasm32.whl" /*"https://localhost:80/lightfm-1.17-cp312-cp312-pyodide_2024_0_wasm32.whl"*/);
+        /* "https://github.com/dirkarnez/lightfm-pyodide/releases/download/v1.17/lightfm-1.17-cp312-cp312-pyodide_2024_0_wasm32.whl" */
+        /* "https://localhost:80/lightfm-1.17-cp312-cp312-pyodide_2024_0_wasm32.whl" */
+        await micropip.install("lightfm-1.17-cp312-cp312-pyodide_2024_0_wasm32.whl");
         await pyodide.runPython(`
         import lightfm
         from lightfm.data import Dataset
